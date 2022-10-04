@@ -1,0 +1,282 @@
+/* Reset Css */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+    font-family:Arial, Helvetica, sans-serif;
+}
+/* 1. Từ ngoài vào trong 
+   2. Từ trên xuống dưới 
+   3. Từ tổng quan đến chi tiết
+*/
+/*  
+1. Vị Trí
+2. Kích thước
+3. Màu Sắc 
+*/
+
+
+
+
+#header{
+    height: 46px;
+    background-color:#D291BC;
+    position:fixed;
+    top:0px ;
+    left: 0px;
+    right: 0px;
+    opacity: 0.7;
+    overflow:hidden;
+
+}
+.menu-mobile {
+    float: right;
+    padding:0 21px;
+    position:absolute;
+    top:0;
+    right:0;
+  
+    
+}
+.menu-mobile {
+    color: #fff;
+    font-size:20px;
+    line-height: 46px;
+}
+.menu-mobile:hover {
+    background-color: aliceblue;
+    color:#D291BC;
+}
+#nav {
+    display:inline-block;
+
+}
+
+#nav li {
+    display:inline-block;
+}
+#nav li a {
+    color: #fff;
+    text-decoration: none;
+    line-height: 46px;
+    padding: 0 24px;
+    display:inline-block; 
+}
+#nav li:hover  a{
+    color:#D291BC;
+    background-color:#fff;
+
+}
+#slider{
+    padding-top: 50%;
+    background: url('/Kỉ niệm 1 năm/assets/css/img/Slider1.jpg') top center / cover no-repeat;
+
+}
+#slider .text-content {
+    color:#fff;
+    position:absolute;
+    bottom:47px;
+    width:100%;
+    text-align: center;
+    
+
+}
+#slider .text-heading {
+    font-size: 25px;
+
+}
+#slider .text-description{
+    font-size: 15px;
+    margin-top: 25px;
+}
+
+#content .content-section{
+    width: 800px ;
+    max-width: 100%;
+    padding-top:64px  ;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:5px;
+    padding-right: 5px;
+}
+#content .section-heading{
+    margin-top:25px;
+    text-align: center;
+    font-size: 26px;
+    font-weight:500;
+    letter-spacing: 4px;
+    color: purple;
+
+}
+#content .sub-section-heading{
+    text-align: center;
+    margin-top: 25px;
+    font-style: italic;
+    opacity: 0.6;
+}
+#content .Story{
+    margin-top: 25px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: darkgreen;
+    background-color: aliceblue;
+   
+
+}
+.text:hover {
+    color: red ;
+
+}
+.section-heading2 {
+    margin-top:25px;
+    text-align: center;
+    font-size: 30px;
+    font-weight:500;
+    letter-spacing: 4px;
+    color: purple;
+
+}
+
+
+
+
+
+
+.menber-list{
+    margin-top:60px;
+    
+  
+}
+ .menber-item{
+    float:left;
+    width: 33.333333%;
+    margin-bottom: 50px;
+    
+    
+    
+    
+    
+    
+}
+ .menber-img-js{
+    width:250px;
+   
+   
+}
+.menber-name {
+    font-size: 15px;
+    margin-top:5px;
+    text-align: center;
+    color:#E0FeFe;
+    
+}
+
+
+.modal{
+    position: fixed;
+    top: 0;
+    left:0;
+    bottom: 0;
+    right:0;
+    background-color: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display:none;
+}
+.modal.open {
+    display:flex;
+
+}
+.modal-container {
+    background-color: #fff;
+    width:900px;
+    min-height: 200px;
+    position:relative;
+    max-width: calc(100% - 40px);
+    animation: modalFadeIn ease .3s;
+
+}
+
+.modal-header{
+    background:#cd84f1;
+    height:130px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size:30px;
+    color:#fff;
+}
+.modal-close{
+    position:absolute;
+    right:0;
+    padding: 8px 16px;
+    color:#fff;
+    
+}
+.modal-close:hover {
+    background-color: red ;
+    color:#fff;
+
+}
+.ti-heart {
+    margin-right: 10px;
+}
+.modal-content{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom:30px;
+    padding-left: 30px;
+    padding-right:30px;
+}
+
+.Theme-img img {
+    width:100%;
+    margin-top: 50px;
+
+}
+#footer{
+    background-color: #fff;
+    padding: 64px 16px;
+    text-align: center;
+
+}
+.social-list {
+    font-size:24px;
+}
+.social-list a {
+    color: rgba(0,0,0,0.6);
+    text-decoration: none;
+
+}
+.social-list a :hover {
+    color: rgba(0,0,0,0.3);
+
+}
+.copyright {
+    margin-top:15px;
+    letter-spacing: 2px;
+
+}
+.copyright a {
+    text-decoration: none;
+}
+@keyframes modalFadeIn {
+    from {
+        opacity:0;
+        transform: translateY(-140px);
+
+    }
+    to {
+        opacity:1;
+        transform: translateY(0);
+
+
+    }
+
+}
