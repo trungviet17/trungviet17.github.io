@@ -16,32 +16,34 @@ timezone:
 
 title: Trung Viet # the main title
 
-tagline: A text-focused Jekyll theme # it will display as the sub-title
+tagline: Welcome to my realm # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
+  This is my personal blog. I write about my life, my thoughts, and my experiences
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://trungviet17.github.io"
 
 github:
-  username: github_username # change to your github username
+  username: trungviet17 # change to your github username
 
-twitter:
-  username: twitter_username # change to your twitter username
+facebook:
+  username: Trung Viet # change to your twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: your_full_name
-  email: example@domain.com # change to your email address
+  name: Trung Viet 
+  email: gnurt17forworking@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your twitter homepage
-    - https://github.com/username # change to your github homepage
+     # change to your twitter homepage
+     # change to your github homepage
     # Uncomment below to add more social links
-    # - https://www.facebook.com/username
+    - https://github.com/trungviet17
+    - https://www.facebook.com/gnurt17
+    - https://www.linkedin.com/in/trung-vi%E1%BB%87t-374a58277/
     # - https://www.linkedin.com/in/username
 
 # Site Verification Settings
