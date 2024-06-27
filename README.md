@@ -1,61 +1,59 @@
-# Chirpy Starter
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+# 1. Introduction (English below) 
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+Xin chào mọi người, mình là Trung, sinh viên đến từ Viện Trí tuệ nhân tạo (IAI - UET - VNU). Khi bắt đầu viết blog này, mình cũng chỉ là một sinh viên bình thường (không có thành tích gì nội bật lắm), trong quá trình nghiên cứu và tự tìm tòi, mình ghi chép kha khá nhiều ra Notion. Điều này làm mình nảy ra ý tưởng về việc viết blog - blog viết về những thứ mình học, những trải nghiệm của mình về mọi thứ xung quanh 
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+"Cách tốt nhất để học một điều gì đó là dạy lại cho người khác hiểu" 
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+Greetings everyone, I'm Trung, a student from the Institute of Artificial Intelligence (IAI - UET - VNU). When I embarked on this blogging journey, I was just an average student with no remarkable accomplishments. During my studies and independent exploration, I accumulated a wealth of notes on Notion. This inspired me to create a blog - a blog dedicated to sharing my learnings and experiences about the world around me.
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
+"The most effective way to learn something is to teach it to others."
+
+# 2. Technical behind blog
+
+Để tạo ra blog này, bạn không cần có những kĩ năng cao trong việc sử dụng javascript, html, css hay bất kì framework liên quan nào khác. Mình sử dụng template có sẵn tại [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy/). Bạn có thể đọc [tutorial](https://www.youtube.com/watch?v=m1RYsmOMPLs) để có thể custom lại template có sẵn theo ý của mình. Tuy nhiên để hiểu sơ qua về cấu trúc của blog này, mình sẽ giới thiệu qua về jekyll và hosting thông qua tên miền github.io
+
+To create this blog, you don't need any advanced skills in JavaScript, HTML, CSS, or any other related frameworks. I used a ready-made template from [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy/). You can read the [tutorial](https://www.youtube.com/watch?v=m1RYsmOMPLs) to customize the template to your liking.  However, to get a basic understanding of the structure of this blog, I will introduce you to Jekyll and hosting through a gitHub.io domain.
+
+![intro](/assets/img/intro.png){: w="700" h="400" }
+
+
+## 2.1 jekyll 
+Jekyll là một framework đơn giản để tạo blog, nó cho phép chuyển đổi các file .md thành các trang web tĩnh và blog một cách nhanh chóng. Cấu trúc của [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy/) template bao gồm những phần sau : 
+
+Jekyll is a simple blog framework that allows you to quickly convert .md files into static websites and blogs. The structure of the [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy/) template includes the following parts:
+
+```
+├── _data                       -> Chứa dữ liệu liên quan tới cá nhân người viết
+│   ├── contact.yml             -> Thông tin liên lạc 
+│   └── share.yml               -> Thông tin liên quan tới chia sẻ bài viết
+├── _plugins                    -> Cách tính năng được viết bằng ruby 
+│    ├──post-lastmod-hook.rb    
+│    └──watcher-patch.rb
+├── assets                      -> Lưu trữ tài nguyên của trang blogs
+│   └── img
+├── _tabs                       -> Các trang thông tin ở thanh tab 
+│   ├── about.md
+│   ├── archives.md
+│   ├── categories.md
+│   └── tags.md
+├── _posts                      -> Nơi viết các bài post
+│   ├── sample-post.md
+│   
+└── _config.yml
 ```
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+# 3. Content 
 
-## Prerequisites
+Trong blog này, mình sẽ viết chủ yếu về những kiến thức mình học và tìm kiếm được liên quan tới lĩnh vực AI, toán và kinh tế tài chính: 
+- **AI**: Mình sẽ viết về kiến thức liên quan tới thuật toán học máy, các mô hình học sâu, tóm tắt nội dung một số paper mới, công nghệ mới mà mình học được 
+- **Toán**: Các kiến thức về toán liên quan tới khoa học dữ liệu và AI nói chung như: Giải tích, Thống kê, Xác suất, Đại số tuyến tính, ..... 
+- **Kinh tế tài chính**: Mình đang nghiên cứu về Trading, Phân tích kĩ thuật và các giao dịch thuật toán 
+- Ngôn ngữ mới, sách, ....  
 
-Follow the instructions in the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of
-the basic environment. [Git](https://git-scm.com/) also needs to be installed.
+In this blog, I will mainly write about the knowledge I have learned and found related to the fields of AI, mathematics, and economics and finance:
 
-## Installation
-
-Sign in to GitHub and [**use this template**][use-template] to generate a brand new repository and name it
-`USERNAME.github.io`, where `USERNAME` represents your GitHub username.
-
-Then clone it to your local machine and run:
-
-```console
-$ bundle
-```
-
-## Usage
-
-Please see the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy#documentation).
-
-## Contributing
-
-The contents of this repository are automatically updated when new releases are made to the [main repository][chirpy].  
-If you have problems using it, or would like to participate in improving it, please go to the main repository for feedback!
-
-## License
-
-This work is published under [MIT][mit] License.
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[use-template]: https://github.com/cotes2020/chirpy-starter/generate
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+- **AI**: I will write about knowledge related to machine learning algorithms, deep learning models, summarizing the content of some new papers, and new technologies that I have learned.
+- **Mathematics**: Mathematical knowledge related to data science and AI in general such as: Analysis, Statistics, Probability, Linear Algebra, .....
+- **Economics and finance**: I am currently researching Trading, Technical Analysis, and algorithmic trading
+- New languages, books, ....
