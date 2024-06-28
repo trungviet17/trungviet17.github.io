@@ -1,11 +1,11 @@
 
 # 1. Introduction (English below) 
 
-Xin chào mọi người, mình là Trung, sinh viên đến từ Viện Trí tuệ nhân tạo (IAI - UET - VNU). Khi bắt đầu viết blog này, mình cũng chỉ là một sinh viên bình thường (không có thành tích gì nội bật lắm), trong quá trình nghiên cứu và tự tìm tòi, mình ghi chép kha khá nhiều ra Notion. Điều này làm mình nảy ra ý tưởng về việc viết blog - blog viết về những thứ mình học, những trải nghiệm của mình về mọi thứ xung quanh 
+Xin chào mọi người, mình là Trung, sinh viên đến từ Viện Trí tuệ nhân tạo (IAI - UET - VNU). Khi bắt đầu viết blog này, mình cũng chỉ là một sinh viên bình thường (không có thành tích gì nội bật lắm), trong quá trình nghiên cứu và tự tìm tòi, mình ghi chép kha khá nhiều ra Notion. Điều này làm mình nảy ra ý tưởng về việc viết blog - blog viết về những thứ mình học, những trải nghiệm của mình về mọi thứ xung quanh. Link blog: [https://trungviet17.github.io/](https://trungviet17.github.io/) 
 
 "Cách tốt nhất để học một điều gì đó là dạy lại cho người khác hiểu" 
 
-Greetings everyone, I'm Trung, a student from the Institute of Artificial Intelligence (IAI - UET - VNU). When I embarked on this blogging journey, I was just an average student with no remarkable accomplishments. During my studies and independent exploration, I accumulated a wealth of notes on Notion. This inspired me to create a blog - a blog dedicated to sharing my learnings and experiences about the world around me.
+Greetings everyone, I'm Trung, a student from the Institute of Artificial Intelligence (IAI - UET - VNU). When I embarked on this blogging journey, I was just an average student with no remarkable accomplishments. During my studies and independent exploration, I accumulated a wealth of notes on Notion. This inspired me to create a blog - a blog dedicated to sharing my learnings and experiences about the world around me. Link:  [https://trungviet17.github.io/](https://trungviet17.github.io/) 
 
 "The most effective way to learn something is to teach it to others."
 
