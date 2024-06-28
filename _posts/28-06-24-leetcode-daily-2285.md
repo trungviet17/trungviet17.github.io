@@ -4,6 +4,7 @@ date: 2024-06-28
 categories: [LeetCode Daily]
 tags: [leetcode, dsa]
 author:  Trung Viet 
+math: true
 ---
 
 
@@ -15,7 +16,7 @@ author:  Trung Viet
 # Bài toán
 Nguyên văn bài toán số 2285 như sau:
 
-    You are given an integer n denoting the number of cities in a country. The cities are numbered from 0 to n - 1.You are also given a 2D integer array roads where roads[i] = [ai, bi] denotes that there exists a bidirectional road connecting cities ai and bi. You need to assign each city with an integer value from 1 to n, where each value can only be used once. The importance of a road is then defined as the sum of the values of the two cities it connects.Return the maximum total importance of all roads possible after assigning the values optimally.
+You are given an integer n denoting the number of cities in a country. The cities are numbered from 0 to n - 1.You are also given a 2D integer array roads where roads[i] = [ai, bi] denotes that there exists a bidirectional road connecting cities ai and bi. You need to assign each city with an integer value from 1 to n, where each value can only be used once. The importance of a road is then defined as the sum of the values of the two cities it connects.Return the maximum total importance of all roads possible after assigning the values optimally.
 
 ![example](/assets/img/leetcode-daily/2024-06-28-example.png){: w="700" h="400" }
 
@@ -63,7 +64,7 @@ Mình có thể tóm tắt lại bài toán thành những ý sau :
         return ans
 ```
 **Phân tích**: 
-1. Thuật toán trên về ý tưởng là đúng và đã accept tuy nhiên vẫn còn chạy tương đối chậm với độ phức tạp $O(NlogN)$
+1. Thuật toán trên về ý tưởng là đúng và đã accept tuy nhiên vẫn còn chạy tương đối chậm với độ phức tạp $$O(NlogN)$$
 2. Thuật toán có thể tối ưu về bộ nhớ thông qua việc loại bỏ khởi tạo biến $importance$ và thực hiện trực tiếp trên $d$
 
 ## Cải thiện thuật toán 
@@ -86,8 +87,8 @@ Mình có thể tóm tắt lại bài toán thành những ý sau :
 
 ```
 **Phân tích**: 
-1. Độ phức tạp thời gian: $O(NlogN)$ 
-2. Độ phức tạp bộ nhớ: $O(N)$ -> cải thiện hơn so với việc sử dụng 2 dictioanry
+1. Độ phức tạp thời gian: $$O(NlogN)$$ 
+2. Độ phức tạp bộ nhớ: $$O(N)$$ -> cải thiện hơn so với việc sử dụng 2 dictioanry
 
 
 # Kết luận 
