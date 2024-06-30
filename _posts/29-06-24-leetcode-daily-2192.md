@@ -9,11 +9,11 @@ math: true
 
 
 
-# Giới thiệu 
+## Giới thiệu 
 Thói quen mỗi ngày làm một bài leetcode daily được mình duy trì trong khoảng thời gian dài (vẫn có mấy ngày cheat day). Mình sẽ đặt vấn đề và đưa ra lời giải của mình cho bài toán, lời giải có thể hay hoặc chưa hay, mọi người có thể đưa ra nhận xét và góp ý về email của mình 😊😊😊😊. Bên cạnh đó mình sẽ phân tích thêm về sample code có tốc độ lớn của Leetcode. 
 
 
-# Bài toán 
+## Bài toán 
 Nguyên văn bài toán 2192 được trình bày như sau: 
 
 You are given a positive integer n representing the number of nodes of a Directed Acyclic Graph (DAG). The nodes are numbered from 0 to n - 1 (inclusive).
@@ -30,14 +30,14 @@ A node u is an ancestor of another node v if u can reach v via a set of edges.
 
 
 
-# Ý tưởng 
+## Ý tưởng 
 Một cách tiếp cận đơn giản nhất với bài toán này đó là liên tưởng tới thuật toán DFS tại mỗi node duyệt qua. Cụ thể thuật toán sẽ thực hiện như sau: 
 1. Set up bài toán với các list cần thiết : mark - list kiểu bool dùng để đánh dấu node đã duyệt, adj - ma trận kề trong đồ thị, ans - ma trận chứa đỉnh trước đó của x 
 2. Duyệt qua các đỉnh và thực hiện dfs trên các đỉnh đó (ví dụ bắt đầu từ đỉnh u). Tại mỗi node dfs duyệt qua, gán cho node đó có tổ tiên là u. 
 3. Sau khi duyệt qua tất cả các đỉnh, trả về ma trận ans.
 
 
-# Cài đặt thuật toán 
+## Cài đặt thuật toán 
 
 ```
 # Python code 
@@ -73,7 +73,7 @@ def dfs(self, u: int, val: int, ances: List[List[int]], mark: List[bool], adj: L
 - Độ phức tạp thời gian :$$O(M + N)$$
 
 
-# Cải thiện thuật toán 
+## Cải thiện thuật toán 
 Trong phần này mình sẽ trình bày thuật toán trong code sample của leetcode và xem mình có thể học được gì từ sample này của họ nhé ✨✨ 
 
 **Ý tưởng:**
@@ -123,6 +123,6 @@ Trong phần này mình sẽ trình bày thuật toán trong code sample của l
 - So sánh với thuật toán ban đầu có vẻ như họ đã cải thiện được các điểm yếu của mình về tốc độ và cả bộ nhớ. Việc sử dụng set thay vì khởi tạo nhiều $$mark$$ tiết kiệm được tương đối bộ nhớ. Đồng thời cập nhật toàn bộ các đỉnh tổ tiên của parent vào đỉnh con là một chiến lược thông minh thay vì duyệt nhiều lần như thuật toán gốc của mình. 
 
 
-# Kết luận 
+## Kết luận 
 - Bài toán được đánh giá là Medium khi yêu cầu sử dụng các thuật toán duyệt đồ thị. 
 - Thuật toán của mình tương đối dở hơi và ngây thơ 😌😌 và cách tối ưu nó (sau khi xem sample code) thì thấy không quá khó 
