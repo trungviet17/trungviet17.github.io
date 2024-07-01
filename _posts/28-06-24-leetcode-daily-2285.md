@@ -2,7 +2,7 @@
 title: Lời giải LeetCode Daily 28-06-2024 
 date: 2024-06-28
 categories: [LeetCode Daily]
-tags: [leetcode, dsa]
+tags: [leetcode-hard, dsa]
 author:  Trung Viet 
 math: true
 ---
