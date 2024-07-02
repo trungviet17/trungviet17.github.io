@@ -68,8 +68,15 @@ Lấy ví dụ về hệ thống gợi ý kết bạn của các mạng xã hộ
 - A kết nối với B không chỉ biểu diễn bởi giá trị 1 mà biểu diễn bởi các giá trị lớn 0, giá trị này càng lớn tức A có nhu cầu kết bạn với B rất cao và ngược lại 
 - Giá trị 0 biểu thị A không thích kết bạn với B thay vì không có đường trực tiếp từ A tới B. Và các đường không trực tiếp này là các biến mà hệ thống mong muốn tính ra (trên hình vẽ biểu diễn bởi giá trị nan). Hay nói cách khác, bài toán hệ thống gợi ý thực chất là bài toán hoàn thiện ma trận
 
-Ngoài ra, các bài toán liên quan đến học máy, dữ liệu thường được biểu diễn dưới dạng những ma trận vì dữ liệu thường rất lớn và có nhiều chiều (đặc biệt là dữ liệu dạng bảng). Phía trên chỉ là 2 ví dụ cơ bản nhất cho những ứng dụng của đại số tuyến tính. Do đó, nếu bạn là một người yêu thích toán, hay mong muốn theo đuổi các lĩnh vực liên quan đến học máy, khoa học dữ liệu hay thị giác máy tính,... thì đại số tuyến tính chính là nền tảng, là bước khởi đầu mà bạn nên chinh phục 
+Ngoài ra, các bài toán liên quan đến học máy, dữ liệu thường được biểu diễn dưới dạng những ma trận vì dữ liệu thường rất lớn và có nhiều chiều (đặc biệt là dữ liệu dạng bảng). Phía trên chỉ là 2 ví dụ cơ bản nhất cho những ứng dụng của đại số tuyến tính. Do đó, nếu bạn là một người yêu thích toán, hay mong muốn theo đuổi các lĩnh vực liên quan đến học máy, khoa học dữ liệu hay thị giác máy tính,... thì đại số tuyến tính chính là nền tảng, là bước khởi đầu mà bạn nên chinh phục. Và câu hỏi cuối đó là học như thế nào là đủ, theo mình - là một sinh viên chưa tốt nghiệp, mục tiêu của mình hiện tại đó là nắm bắt và ứng dụng các kiến thức cơ bản của bộ môn này vào trong các dự án liên quan tới khoa học dữ liệu nói chung. 
 
 ## Kết luận 
 Trong bài viết này, mình đã giới thiệu qua về đại số tuyến tính nói chung, trả lời những câu hỏi mà mình đặt ra trước khi tìm hiểu về môn học này. Hy vọng đã rõ được mục tiêu và truyền một ít động lực để mọi người cùng mình chinh phục môn học này nhé. Trong các bài viết sau mình sẽ đi vào những khái niệm cơ bản nhất, tóm tắt lại những kiến thức mình đã học và diễn giải một cách rõ ràng nhất theo ý hiểu của mình. Keep practicing and studying !
  
+
+## Tham khảo 
+https://vi.wikipedia.org/wiki/%C4%90%E1%BA%A1i_s%E1%BB%91
+
+https://vi.wikipedia.org/wiki/%C4%90%E1%BA%A1i_s%E1%BB%91_tuy%E1%BA%BFn_t%C3%ADnh
+
+https://datahacker.rs/linear-algebra-for-machine-learning/
