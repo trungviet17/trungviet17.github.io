@@ -2,7 +2,7 @@
 title: Lời giải LeetCode Daily 01-07-2024 và 02-07-2024
 date: 2024-07-02
 categories: [LeetCode Daily]
-tags: [leetcode-hard, dsa]
+tags: [leetcode-easy, dsa]
 author:  Trung Viet 
 math: true
 ---
