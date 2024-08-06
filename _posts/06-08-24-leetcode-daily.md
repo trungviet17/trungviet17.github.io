@@ -63,6 +63,11 @@ h="400" }
             return res 
 ```
 **Phân tích:**
+
+![example](/assets/img/leetcode-daily/2024-08-06-analyze.png){: w="700" 
+h="400" }
+
+
 1. Thuật toán sử dụng phép sắp xếp do đó có độ phức tạp về thời gian là $$O(NlogN)$$
 2. Thuật toán sử dụng dictionary để lưu trữ, do đó, độ phức tạp về không gian là $$O(N)$$ - tương đối lớn 
 3. Từ 2 phân tích về bộ nhớ và thời gian trên, có thể cải thiện thuật toán thông qua cải thiện bộ nhớ (thay thế dictionary bằng một list, khi đó, thời gian chạy thuật toán sắp xếp có thể được đảm bảo hơn)
