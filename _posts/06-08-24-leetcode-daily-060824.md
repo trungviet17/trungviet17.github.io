@@ -11,7 +11,7 @@ math: true
 ## Giới thiệu 
 Cũng khoảng hơn một tháng rồi mình chưa có quay lại viết blog, tháng vừa rồi mình cũng hơi bận và cũng hơi hơi lười viết, do đó, hôm nay mình sẽ chính thức quay trở lại và ổn định lại lịch học tập và làm việc, hy vọng mọi người theo dõi các bài viết của mình trong thời gian sắp tới. Mình sẽ mở đầu với chuỗi bài viết về leetcode daily ngày hôm nay. 
 
-
+    
 ## Bài toán 
 **Nguyên văn bài toán 3016 như sau:** 
 
