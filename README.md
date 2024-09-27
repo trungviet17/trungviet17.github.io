@@ -1,5 +1,5 @@
 
-# 1. Introduction (English below) 
+# 1. Introduction 
 Greetings everyone, I'm Trung, a student from the Institute of Artificial Intelligence (IAI - UET - VNU). When I embarked on this blogging journey, I was just an average student with no remarkable accomplishments. During my studies and independent exploration, I accumulated a wealth of notes on Notion. This inspired me to create a blog - a blog dedicated to sharing my learnings and experiences about the world around me. Link:  [https://trungviet17.github.io/](https://trungviet17.github.io/) 
 
 "The most effective way to learn something is to teach it to others."
