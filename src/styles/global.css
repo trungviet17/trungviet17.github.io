@@ -101,6 +101,10 @@
     color: var(--text-muted);
   }
 
+  /* URL trần trong danh sách tham khảo dài hơn màn hình điện thoại và
+     không có chỗ ngắt tự nhiên — cho phép ngắt giữa chừng. */
+  .prose { overflow-wrap: break-word; }
+
   /* Bảng và khối code rộng tự cuộn, KHÔNG đẩy cả trang cuộn ngang. */
   .prose :where(table) { display: block; overflow-x: auto; }
   .prose :where(pre) { overflow-x: auto; }
