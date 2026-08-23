@@ -1,0 +1,39 @@
+---
+import { UI } from '@/config';
+---
+
+<div id="scroll-sentinel" aria-hidden="true"></div>
+
+<button
+  id="back-to-top"
+  type="button"
+  aria-label={UI.backToTop}
+  title={UI.backToTop}
+  class="fixed bottom-6 right-6 z-40 grid size-11 translate-y-3 place-items-center rounded-full border border-[var(--border)] bg-[var(--bg-elevated)] text-[var(--text-muted)] opacity-0 shadow-lg transition-all duration-200 hover:text-[var(--accent)] data-[visible]:translate-y-0 data-[visible]:opacity-100"
+  hidden
+>
+  <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M12 19V5M5 12l7-7 7 7"></path>
+  </svg>
+</button>
+
+<script>
+  const button = document.getElementById('back-to-top');
+  const sentinel = document.getElementById('scroll-sentinel');
+
+  if (button && sentinel) {
+    button.hidden = false;
+    new IntersectionObserver(
+      ([entry]) => {
+        if (entry!.isIntersecting) button.removeAttribute('data-visible');
+        else button.setAttribute('data-visible', '');
+      },
+      { rootMargin: '400px 0px 0px 0px' },
+    ).observe(sentinel);
+
+    button.addEventListener('click', () => {
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    });
+  }
+</script>

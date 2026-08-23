@@ -63,24 +63,37 @@ export default function remarkImageFigure() {
       if (next.value.trim() === '') parent.children.splice(index + 1, 1);
     });
 
-    // Bước 2: ảnh đứng một mình trong đoạn → bọc <figure>, dòng in nghiêng
-    // ngay sau trở thành <figcaption>.
-    visit(tree, 'paragraph', (node) => {
-      const kids = meaningful(node.children);
-      const image = kids[0];
-      if (image?.type !== 'image' || kids.length > 2) return;
+    // Bước 2: ảnh đứng cuối đoạn (kèm chú thích in nghiêng nếu có) → <figure>.
+    // Trong corpus, ảnh thường nối liền dòng văn phía trên mà không có dòng
+    // trống, nên nó nằm chung paragraph với prose. Khi đó tách đoạn: phần chữ
+    // ở lại <p>, ảnh + chú thích tách ra thành <figure> riêng.
+    visit(tree, 'paragraph', (node, index, parent) => {
+      if (!parent || index === null || node.data?.hName) return;
 
-      const caption = kids.length === 2 && kids[1].type === 'emphasis' ? kids[1] : null;
-      if (kids.length === 2 && !caption) return; // ảnh + nội dung khác → để yên
+      const kids = node.children;
+      let end = kids.length;
+      while (end > 0 && kids[end - 1].type === 'text' && !kids[end - 1].value.trim()) end--;
+
+      const last = kids[end - 1];
+      const caption = last?.type === 'emphasis' ? last : null;
+      const imageIndex = caption ? end - 2 : end - 1;
+      const image = kids[imageIndex];
+      if (image?.type !== 'image') return;
 
       const props = (image.data ??= {}).hProperties ??= {};
       props.loading ??= 'lazy';
       props.decoding ??= 'async';
 
-      node.data = { hName: 'figure', hProperties: { className: ['post-figure'] } };
-      node.children = caption
-        ? [image, { ...caption, data: { hName: 'figcaption' } }]
-        : [image];
+      const figure = {
+        type: 'paragraph',
+        data: { hName: 'figure', hProperties: { className: ['post-figure'] } },
+        children: caption ? [image, { ...caption, data: { hName: 'figcaption' } }] : [image],
+      };
+
+      // Còn chữ phía trước ảnh thì giữ lại thành một đoạn riêng.
+      const before = kids.slice(0, imageIndex);
+      const hasProse = before.some((c) => c.type !== 'text' || c.value.trim());
+      parent.children.splice(index, 1, ...(hasProse ? [{ ...node, children: before }, figure] : [figure]));
     });
   };
 }

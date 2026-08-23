@@ -1,0 +1,74 @@
+---
+import BaseHead from '@/components/BaseHead.astro';
+import Sidebar from '@/components/Sidebar.astro';
+import BackToTop from '@/components/BackToTop.astro';
+import { SITE, UI } from '@/config';
+import '@/styles/global.css';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+  updatedAt?: Date;
+  author?: string;
+  tags?: readonly string[];
+  noindex?: boolean;
+  wide?: boolean;
+}
+
+const { wide = false, ...head } = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <BaseHead {...head} />
+    <script is:inline>
+      // Chạy trước mọi stylesheet để tránh nhấp nháy sai theme khi tải trang.
+      (() => {
+        const saved = localStorage.getItem('theme');
+        const dark = saved
+          ? saved === 'dark'
+          : matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.dataset.codeTheme = dark ? 'github-dark' : 'github-light';
+      })();
+    </script>
+    <script is:inline>
+      // Chirpy đăng ký service worker cho PWA. Khách quay lại vẫn còn worker cũ
+      // và sẽ tiếp tục được phục vụ vỏ Jekyll đã chết nếu không gỡ.
+      navigator.serviceWorker?.getRegistrations?.().then((rs) => rs.forEach((r) => r.unregister()));
+    </script>
+  </head>
+
+  <body class="min-h-dvh">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-[var(--bg-elevated)] focus:px-4 focus:py-2"
+    >
+      {UI.skipToContent}
+    </a>
+
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 py-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-12 lg:px-8 lg:py-12">
+      <div class="lg:sticky lg:top-12 lg:h-fit">
+        <Sidebar />
+      </div>
+
+      <main id="main" class:list={['min-w-0', !wide && 'max-w-3xl']}>
+        <slot />
+      </main>
+    </div>
+
+    <footer
+      class="mx-auto max-w-7xl px-4 py-8 text-center text-sm text-[var(--text-muted)] lg:px-8"
+      data-pagefind-ignore
+    >
+      <p>© {new Date().getUTCFullYear()} {SITE.author}. Viết bằng Astro.</p>
+    </footer>
+
+    <BackToTop />
+  </body>
+</html>
