@@ -7,6 +7,7 @@ import expressiveCode from 'astro-expressive-code';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkImageFigure from './src/plugins/remark-image-figure.mjs';
+import rehypeKatexSearch from './src/plugins/rehype-katex-search.mjs';
 
 export default defineConfig({
   site: 'https://trungviet17.github.io',
@@ -42,6 +43,7 @@ export default defineConfig({
       rehypePlugins: [
         rehypeHeadingIds,
         [rehypeKatex, { strict: false, throwOnError: false }],
+        rehypeKatexSearch,
       ],
     }),
   },

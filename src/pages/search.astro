@@ -16,7 +16,12 @@ import { UI } from '@/config';
   </form>
 
   <p id="search-status" class="mt-4 text-sm text-[var(--text-muted)]" role="status" aria-live="polite"></p>
-  <div id="search-results" class="mt-2 space-y-4"></div>
+  <div
+    id="search-results"
+    class="mt-2 space-y-4"
+    data-pagefind-url={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/pagefind/pagefind.js`}
+  >
+  </div>
 </PageLayout>
 
 <script>
@@ -36,11 +41,22 @@ import { UI } from '@/config';
 
   let pagefind: Pagefind | null = null;
 
+  /** Dựng import() lúc chạy để bundler không đụng vào được. */
+  const importAtRuntime = new Function('url', 'return import(url)') as (
+    url: string,
+  ) => Promise<unknown>;
+
   async function load() {
     if (pagefind) return pagefind;
     try {
       // Chỉ tồn tại sau `astro build && pagefind`, không có trong `astro dev`.
-      pagefind = (await import(/* @vite-ignore */ '/pagefind/pagefind.js')) as Pagefind;
+      //
+      // Import phải được dựng lúc chạy. Viết import() trực tiếp thì Vite bọc
+      // nó trong helper preload kèm __VITE_PRELOAD__ mà không thay thế biến
+      // đó, khiến lời gọi ném ReferenceError ngay trên bản build thật. Chú
+      // thích @vite-ignore không cứu được vì esbuild xoá nó khi transpile TS.
+      const url = results.dataset.pagefindUrl!;
+      pagefind = (await importAtRuntime(url)) as Pagefind;
       await pagefind.init?.();
       return pagefind;
     } catch {

@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { slugify } from './slug';
-import { lastModified } from './git';
+import { gitHistory } from './git';
 import { readingMinutes } from './readingTime';
 import { SITE } from '@/config';
 
@@ -86,9 +86,15 @@ export const sortedGroups = (groups: ReturnType<typeof groupBy>) =>
 
 /** Ngày cập nhật: frontmatter thắng, sau đó tới git. Chỉ dùng khi muộn hơn ngày đăng. */
 export function updatedDate(post: Post): Date | undefined {
-  const candidate = post.data.updated ?? lastModified(`src/content/posts/${post.filePath?.split('/').pop() ?? ''}`);
-  if (!candidate) return undefined;
-  return candidate.valueOf() > post.data.date.valueOf() ? candidate : undefined;
+  // Frontmatter luôn thắng nếu tác giả đã ghi rõ.
+  if (post.data.updated) return post.data.updated;
+
+  const history = post.filePath ? gitHistory(post.filePath) : undefined;
+  // Chỉ coi là "đã cập nhật" khi bài được sửa lại SAU khi đăng. Tác giả hay
+  // commit muộn hơn ngày ghi trong frontmatter vài ngày, nên riêng việc ngày
+  // git muộn hơn thì chưa đủ — nếu không thì bài nào cũng dán nhãn cập nhật.
+  if (!history || history.revisions < 2) return undefined;
+  return history.date.valueOf() > post.data.date.valueOf() ? history.date : undefined;
 }
 
 export const minutesToRead = (post: Post) => readingMinutes(post.body ?? '');
