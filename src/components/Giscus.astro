@@ -1,7 +1,7 @@
 ---
 import { GISCUS, UI } from '@/config';
 
-// Chỉ render khi đã điền repoId/categoryId — thiếu thì widget im lặng hỏng.
+// Thiếu repoId/categoryId thì widget hỏng im lặng — thà không render.
 const ready = GISCUS.enabled && GISCUS.repoId && GISCUS.categoryId;
 ---
 
@@ -9,36 +9,51 @@ const ready = GISCUS.enabled && GISCUS.repoId && GISCUS.categoryId;
   ready && (
     <section class="mt-12 border-t border-[var(--border)] pt-8" data-pagefind-ignore>
       <h2 class="mb-4 text-lg font-bold tracking-tight">{UI.comments}</h2>
-      <script
-        is:inline
-        src="https://giscus.app/client.js"
+      {/*
+        Script giscus được tự chèn bằng JS thay vì viết thẳng thẻ <script async>.
+        Thẻ tĩnh sẽ chạy trước khi biết theme hiện tại, giscus đọc được
+        data-theme là undefined và đi nạp https://giscus.app/<lang>/undefined
+        làm stylesheet — 404.
+      */}
+      <div
+        id="giscus-mount"
         data-repo={GISCUS.repo}
         data-repo-id={GISCUS.repoId}
         data-category={GISCUS.category}
         data-category-id={GISCUS.categoryId}
         data-mapping={GISCUS.mapping}
-        data-strict="1"
-        data-reactions-enabled={GISCUS.reactionsEnabled}
-        data-emit-metadata="0"
-        data-input-position="bottom"
+        data-reactions={GISCUS.reactionsEnabled}
         data-lang={GISCUS.lang}
-        data-loading="lazy"
-        crossorigin="anonymous"
-        async
       />
     </section>
   )
 }
 
-<script is:inline>
-  // Theme ban đầu cho iframe giscus; nút chuyển theme lo phần cập nhật sau.
-  document.addEventListener('DOMContentLoaded', () => {
-    const script = document.querySelector('script[src^="https://giscus.app"]');
-    if (script) {
-      script.setAttribute(
-        'data-theme',
-        document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-      );
-    }
-  });
+<script>
+  const mount = document.getElementById('giscus-mount');
+
+  if (mount) {
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+
+    Object.assign(script.dataset, {
+      repo: mount.dataset.repo!,
+      repoId: mount.dataset.repoId!,
+      category: mount.dataset.category!,
+      categoryId: mount.dataset.categoryId!,
+      mapping: mount.dataset.mapping!,
+      strict: '1',
+      reactionsEnabled: mount.dataset.reactions!,
+      emitMetadata: '0',
+      inputPosition: 'bottom',
+      lang: mount.dataset.lang!,
+      loading: 'lazy',
+      // Theme đã được script chống-nhấp-nháy trong <head> quyết định xong.
+      theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+    });
+
+    mount.append(script);
+  }
 </script>

@@ -39,11 +39,11 @@ export const NAV = [
  * cho repo và cài giscus app. Đây là định danh công khai, không phải secret.
  */
 export const GISCUS = {
-  enabled: false, // bật lên sau khi điền repoId và categoryId
+  enabled: true,
   repo: 'trungviet17/trungviet17.github.io',
-  repoId: '',
+  repoId: 'R_kgDOMOgQNg',
   category: 'Announcements',
-  categoryId: '',
+  categoryId: 'DIC_kwDOMOgQNs4DEBU_',
   mapping: 'pathname',
   reactionsEnabled: '1',
   lang: 'vi',

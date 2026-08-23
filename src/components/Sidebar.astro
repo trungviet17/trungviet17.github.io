@@ -1,4 +1,5 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
 import { SITE, SOCIAL, NAV, UI } from '@/config';
 
 const path = Astro.url.pathname;
@@ -87,5 +88,9 @@ const ICONS: Record<string, string> = {
         <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
       </svg>
     </a>
+
+    <div class="ml-auto lg:ml-0">
+      <ThemeToggle />
+    </div>
   </div>
 </aside>
