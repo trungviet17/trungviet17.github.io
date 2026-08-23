@@ -1,0 +1,56 @@
+---
+import { href } from '@/lib/posts';
+import { UI } from '@/config';
+
+interface Props { page: number; total: number }
+const { page, total } = Astro.props;
+
+// Cửa sổ trang quanh trang hiện tại, có dấu ... khi bị ngắt quãng.
+const window = new Set([1, total, page, page - 1, page + 1]);
+const numbers = [...window].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
+const items: (number | 'gap')[] = [];
+numbers.forEach((n, i) => {
+  if (i > 0 && n - numbers[i - 1]! > 1) items.push('gap');
+  items.push(n);
+});
+---
+
+{
+  total > 1 && (
+    <nav class="mt-10 flex items-center justify-between gap-4" aria-label="Phân trang">
+      {page > 1 ? (
+        <a href={href.page(page - 1)} rel="prev" class="text-sm text-[var(--accent)] hover:underline">
+          ← {UI.prevPage}
+        </a>
+      ) : <span />}
+
+      <ul class="flex items-center gap-1">
+        {items.map((item) =>
+          item === 'gap' ? (
+            <li class="px-1 text-[var(--text-muted)]" aria-hidden="true">…</li>
+          ) : (
+            <li>
+              <a
+                href={href.page(item)}
+                aria-current={item === page ? 'page' : undefined}
+                aria-label={`${UI.page} ${item}`}
+                class:list={[
+                  'grid size-8 place-items-center rounded-md text-sm transition',
+                  item === page
+                    ? 'bg-[var(--accent)] font-semibold text-white'
+                    : 'text-[var(--text-muted)] hover:bg-[var(--bg-subtle)]',
+                ]}
+              >{item}</a>
+            </li>
+          ),
+        )}
+      </ul>
+
+      {page < total ? (
+        <a href={href.page(page + 1)} rel="next" class="text-sm text-[var(--accent)] hover:underline">
+          {UI.nextPage} →
+        </a>
+      ) : <span />}
+    </nav>
+  )
+}

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import Pagination from '@/components/Pagination.astro';
+import { getListedPosts, pageSlice, totalPages } from '@/lib/posts';
+import { SITE, UI } from '@/config';
+
+const posts = await getListedPosts();
+const total = totalPages(posts.length);
+const items = pageSlice(posts, 1);
+---
+
+<BaseLayout title={SITE.title} description={SITE.description}>
+  {items.length ? items.map((post) => <PostCard post={post} />) : <p>{UI.noPosts}</p>}
+  <Pagination page={1} total={total} />
+</BaseLayout>

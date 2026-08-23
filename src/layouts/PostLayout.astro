@@ -1,0 +1,92 @@
+---
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import PostMeta from '@/components/PostMeta.astro';
+import Toc from '@/components/Toc.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+import SeriesNav from '@/components/SeriesNav.astro';
+import RelatedPosts from '@/components/RelatedPosts.astro';
+import Giscus from '@/components/Giscus.astro';
+import type { Post } from '@/lib/posts';
+import { href, excerpt, minutesToRead, updatedDate } from '@/lib/posts';
+
+interface Props {
+  post: Post;
+  headings: MarkdownHeading[];
+  seriesPosts?: Post[];
+  related?: Post[];
+}
+
+const { post, headings, seriesPosts = [], related = [] } = Astro.props;
+const { title, date, author, categories, tags, series, toc, comments, cover } = post.data;
+
+const updated = updatedDate(post);
+const url = new URL(href.post(post), Astro.site);
+const showToc = toc && headings.filter((h) => h.depth === 2 || h.depth === 3).length > 1;
+---
+
+<BaseLayout
+  title={title}
+  description={excerpt(post, 160)}
+  image={cover?.src}
+  type="article"
+  publishedAt={date}
+  updatedAt={updated}
+  author={author}
+  tags={tags}
+  wide={showToc}
+>
+  <div class:list={['gap-10', showToc && 'xl:grid xl:grid-cols-[minmax(0,1fr)_13rem]']}>
+    <article class="min-w-0 max-w-3xl">
+      <header class="mb-8">
+        <div class="flex flex-wrap gap-2 text-sm">
+          {categories.map((c) => (
+            <a href={href.category(c)} class="text-[var(--accent)] hover:underline">{c}</a>
+          ))}
+        </div>
+        <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{title}</h1>
+        <PostMeta class="mt-3" date={date} updated={updated} minutes={minutesToRead(post)} />
+      </header>
+
+      {series && seriesPosts.length > 1 && (
+        <div class="mb-8"><SeriesNav series={series} posts={seriesPosts} current={post} /></div>
+      )}
+
+      <div class="prose dark:prose-invert max-w-none prose-headings:scroll-mt-24 prose-a:text-[var(--accent)] prose-img:mx-auto" data-pagefind-body>
+        <slot />
+      </div>
+
+      {tags.length > 0 && (
+        <ul class="mt-8 flex flex-wrap gap-2" data-pagefind-ignore>
+          {tags.map((t) => (
+            <li>
+              <a href={href.tag(t)} class="inline-block rounded-md bg-[var(--bg-subtle)] px-2.5 py-1 text-sm text-[var(--text-muted)] transition hover:text-[var(--accent)]">
+                #{t}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div class="mt-8 border-t border-[var(--border)] pt-6">
+        <ShareButtons title={title} url={url} />
+      </div>
+
+      <RelatedPosts posts={related} />
+      {comments && <Giscus />}
+    </article>
+
+    {showToc && (
+      <div class="hidden xl:block">
+        <div class="sticky top-12 max-h-[calc(100dvh-6rem)] overflow-y-auto">
+          <Toc headings={headings} />
+        </div>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  import { initLightbox } from '@/scripts/lightbox';
+  initLightbox();
+</script>

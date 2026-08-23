@@ -1,0 +1,22 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import { getPublishedPosts, groupByCategory, sortedGroups, href } from '@/lib/posts';
+import { UI } from '@/config';
+
+const groups = sortedGroups(groupByCategory(await getPublishedPosts()));
+---
+
+<PageLayout title={UI.categories} lead={`${groups.length} chuyên mục`}>
+  <ul class="grid gap-3 sm:grid-cols-2">
+    {
+      groups.map((g) => (
+        <li>
+          <a href={href.category(g.name)} class="flex items-baseline justify-between gap-3 rounded-lg border border-[var(--border)] px-4 py-3 transition hover:border-[var(--accent)]">
+            <span class="font-semibold">{g.name}</span>
+            <span class="shrink-0 text-sm text-[var(--text-muted)]">{UI.postCount(g.posts.length)}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</PageLayout>

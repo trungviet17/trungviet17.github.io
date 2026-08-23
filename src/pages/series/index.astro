@@ -1,0 +1,43 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import { getPublishedPosts, groupBySeries, sortedGroups, href } from '@/lib/posts';
+import { formatDate } from '@/lib/datetime';
+import { UI } from '@/config';
+
+const groups = sortedGroups(groupBySeries(await getPublishedPosts()));
+---
+
+<PageLayout title={UI.series} lead={`${groups.length} chuỗi bài`}>
+  <div class="space-y-6">
+    {
+      groups.map((g) => (
+        <section class="rounded-lg border border-[var(--border)] p-5">
+          <h2 class="text-lg font-bold">
+            <a href={href.series(g.name)} class="hover:text-[var(--accent)]">{g.name}</a>
+            <span class="ml-2 text-sm font-normal text-[var(--text-muted)]">
+              {UI.inSeries(g.posts.length)}
+            </span>
+          </h2>
+          <ol class="mt-3 space-y-1.5 text-sm">
+            {g.posts.slice(0, 5).map((p, i) => (
+              <li class="flex gap-2">
+                <span class="text-[var(--text-muted)] tabular-nums">{i + 1}.</span>
+                <a href={href.post(p)} class="text-[var(--text-muted)] hover:text-[var(--accent)]">
+                  {p.data.title}
+                </a>
+                <span class="ml-auto shrink-0 text-xs text-[var(--text-muted)]">
+                  {formatDate(p.data.date)}
+                </span>
+              </li>
+            ))}
+          </ol>
+          {g.posts.length > 5 && (
+            <a href={href.series(g.name)} class="mt-3 inline-block text-sm text-[var(--accent)] hover:underline">
+              Xem cả {g.posts.length} bài →
+            </a>
+          )}
+        </section>
+      ))
+    }
+  </div>
+</PageLayout>

@@ -1,0 +1,25 @@
+---
+import { formatDate, isoDate } from '@/lib/datetime';
+import { UI } from '@/config';
+
+interface Props {
+  date: Date;
+  updated?: Date;
+  minutes?: number;
+  class?: string;
+}
+const { date, updated, minutes, class: className } = Astro.props;
+---
+
+<div class:list={['flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-[var(--text-muted)]', className]}>
+  <time datetime={isoDate(date)}>{formatDate(date)}</time>
+  {minutes && <><span aria-hidden="true">·</span><span>{UI.readingTime(minutes)}</span></>}
+  {
+    updated && (
+      <>
+        <span aria-hidden="true">·</span>
+        <span>{UI.updatedOn} <time datetime={isoDate(updated)}>{formatDate(updated)}</time></span>
+      </>
+    )
+  }
+</div>

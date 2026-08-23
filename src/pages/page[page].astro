@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import Pagination from '@/components/Pagination.astro';
+import { getListedPosts, pageSlice, totalPages } from '@/lib/posts';
+import { SITE, UI } from '@/config';
+
+// paginate() của Astro sinh /2/ hoặc /page/2/, còn Jekyll dùng /page2/.
+// Tự dựng path để giữ đúng URL cũ.
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getListedPosts();
+  const total = totalPages(posts.length);
+  return Array.from({ length: Math.max(0, total - 1) }, (_, i) => {
+    const page = i + 2;
+    return {
+      params: { page: String(page) },
+      props: { posts: pageSlice(posts, page), page, total },
+    };
+  });
+};
+
+const { posts, page, total } = Astro.props;
+---
+
+<BaseLayout title={`${UI.page} ${page} · ${SITE.title}`} description={SITE.description} noindex>
+  {posts.map((post) => <PostCard post={post} />)}
+  <Pagination page={page} total={total} />
+</BaseLayout>

@@ -1,0 +1,30 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import PostLayout from '@/layouts/PostLayout.astro';
+import { getPublishedPosts, groupBySeries } from '@/lib/posts';
+import { relatedPosts } from '@/lib/related';
+import { slugify } from '@/lib/slug';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getPublishedPosts();
+  const series = groupBySeries(posts);
+
+  return posts.map((post) => ({
+    // post.id đã bị cắt tiền tố ngày ở generateId → /posts/rlhf/
+    params: { slug: post.id },
+    props: {
+      post,
+      seriesPosts: post.data.series ? (series.get(slugify(post.data.series))?.posts ?? []) : [],
+      related: relatedPosts(post, posts),
+    },
+  }));
+};
+
+const { post, seriesPosts, related } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<PostLayout post={post} headings={headings} seriesPosts={seriesPosts} related={related}>
+  <Content />
+</PostLayout>

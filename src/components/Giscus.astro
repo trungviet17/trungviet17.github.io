@@ -1,0 +1,44 @@
+---
+import { GISCUS, UI } from '@/config';
+
+// Chỉ render khi đã điền repoId/categoryId — thiếu thì widget im lặng hỏng.
+const ready = GISCUS.enabled && GISCUS.repoId && GISCUS.categoryId;
+---
+
+{
+  ready && (
+    <section class="mt-12 border-t border-[var(--border)] pt-8" data-pagefind-ignore>
+      <h2 class="mb-4 text-lg font-bold tracking-tight">{UI.comments}</h2>
+      <script
+        is:inline
+        src="https://giscus.app/client.js"
+        data-repo={GISCUS.repo}
+        data-repo-id={GISCUS.repoId}
+        data-category={GISCUS.category}
+        data-category-id={GISCUS.categoryId}
+        data-mapping={GISCUS.mapping}
+        data-strict="1"
+        data-reactions-enabled={GISCUS.reactionsEnabled}
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-lang={GISCUS.lang}
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async
+      />
+    </section>
+  )
+}
+
+<script is:inline>
+  // Theme ban đầu cho iframe giscus; nút chuyển theme lo phần cập nhật sau.
+  document.addEventListener('DOMContentLoaded', () => {
+    const script = document.querySelector('script[src^="https://giscus.app"]');
+    if (script) {
+      script.setAttribute(
+        'data-theme',
+        document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+      );
+    }
+  });
+</script>

@@ -1,0 +1,21 @@
+---
+import type { GetStaticPaths } from 'astro';
+import PageLayout from '@/layouts/PageLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { getPublishedPosts, groupBySeries } from '@/lib/posts';
+import { UI } from '@/config';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const groups = groupBySeries(await getPublishedPosts());
+  return [...groups.entries()].map(([slug, group]) => ({
+    params: { series: slug },
+    props: { name: group.name, posts: group.posts },
+  }));
+};
+
+const { name, posts } = Astro.props;
+---
+
+<PageLayout title={name} description={`Chuỗi bài ${name}`} lead={UI.inSeries(posts.length)}>
+  {posts.map((post) => <PostCard post={post} />)}
+</PageLayout>

@@ -1,0 +1,39 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import { getPublishedPosts, href } from '@/lib/posts';
+import { formatDate, isoDate, yearOf } from '@/lib/datetime';
+import { UI } from '@/config';
+
+const posts = await getPublishedPosts();
+
+const byYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const year = yearOf(post.data.date);
+  byYear.set(year, [...(byYear.get(year) ?? []), post]);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+---
+
+<PageLayout title={UI.archives} lead={UI.postCount(posts.length)}>
+  <div class="space-y-8">
+    {
+      years.map(([year, items]) => (
+        <section>
+          <h2 class="mb-3 text-xl font-bold tracking-tight">{year}</h2>
+          <ul class="space-y-2 border-l border-[var(--border)] pl-4">
+            {items.map((post) => (
+              <li class="flex flex-wrap items-baseline gap-x-3">
+                <time datetime={isoDate(post.data.date)} class="shrink-0 text-sm tabular-nums text-[var(--text-muted)]">
+                  {formatDate(post.data.date)}
+                </time>
+                <a href={href.post(post)} class="font-medium hover:text-[var(--accent)]">
+                  {post.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</PageLayout>

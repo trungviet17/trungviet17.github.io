@@ -1,0 +1,32 @@
+---
+import type { Post } from '@/lib/posts';
+import { href, minutesToRead } from '@/lib/posts';
+import { formatDate, isoDate } from '@/lib/datetime';
+import { UI } from '@/config';
+
+interface Props { posts: Post[] }
+const { posts } = Astro.props;
+---
+
+{
+  posts.length > 0 && (
+    <section class="mt-12 border-t border-[var(--border)] pt-8" data-pagefind-ignore>
+      <h2 class="text-lg font-bold tracking-tight">{UI.relatedPosts}</h2>
+      <ul class="mt-4 grid gap-4 sm:grid-cols-3">
+        {posts.map((p) => (
+          <li>
+            <a href={href.post(p)} class="group block h-full rounded-lg border border-[var(--border)] p-4 transition hover:border-[var(--accent)]">
+              <h3 class="font-semibold leading-snug transition group-hover:text-[var(--accent)]">
+                {p.data.title}
+              </h3>
+              <p class="mt-2 text-xs text-[var(--text-muted)]">
+                <time datetime={isoDate(p.data.date)}>{formatDate(p.data.date)}</time>
+                {' · '}{UI.readingTime(minutesToRead(p))}
+              </p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

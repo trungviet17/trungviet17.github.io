@@ -1,0 +1,15 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { UI } from '@/config';
+---
+
+<BaseLayout title={UI.notFoundTitle} noindex>
+  <div class="py-16 text-center">
+    <p class="text-6xl font-bold text-[var(--text-muted)]">404</p>
+    <h1 class="mt-4 text-2xl font-bold tracking-tight">{UI.notFoundTitle}</h1>
+    <p class="mt-2 text-[var(--text-muted)]">{UI.notFoundBody}</p>
+    <a href="/" class="mt-6 inline-block rounded-lg bg-[var(--accent)] px-4 py-2 font-medium text-white transition hover:opacity-90">
+      {UI.backHome}
+    </a>
+  </div>
+</BaseLayout>

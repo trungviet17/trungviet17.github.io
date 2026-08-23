@@ -1,0 +1,61 @@
+---
+import type { MarkdownHeading } from 'astro';
+import { UI } from '@/config';
+
+interface Props { headings: MarkdownHeading[] }
+// Chỉ lấy h2/h3: sâu hơn thì mục lục rối hơn là hữu ích.
+const items = Astro.props.headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  items.length > 1 && (
+    <nav class="text-sm" aria-labelledby="toc-heading" data-pagefind-ignore>
+      <h2 id="toc-heading" class="mb-2 font-semibold tracking-tight">{UI.toc}</h2>
+      <ul class="space-y-1 border-l border-[var(--border)]">
+        {items.map((h) => (
+          <li>
+            <a
+              href={`#${h.slug}`}
+              data-toc-link={h.slug}
+              class:list={[
+                'toc-link -ml-px block border-l border-transparent py-0.5 text-[var(--text-muted)] transition hover:text-[var(--text)]',
+                h.depth === 2 ? 'pl-3' : 'pl-6',
+              ]}
+            >{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
+  if (links.length) {
+    const byId = new Map([...links].map((l) => [l.dataset.tocLink!, l]));
+    const visible = new Set<string>();
+
+    const paint = () => {
+      // Mục đang đọc = heading hiển thị đầu tiên theo thứ tự tài liệu.
+      let current: string | undefined;
+      for (const [id] of byId) if (visible.has(id)) { current = id; break; }
+      for (const [id, link] of byId) link.dataset.active = String(id === current);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        }
+        paint();
+      },
+      { rootMargin: '-80px 0px -70% 0px' },
+    );
+
+    for (const id of byId.keys()) {
+      const heading = document.getElementById(id);
+      if (heading) observer.observe(heading);
+    }
+  }
+</script>

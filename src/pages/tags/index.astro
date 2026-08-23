@@ -1,0 +1,27 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import { getPublishedPosts, groupByTag, sortedGroups, href } from '@/lib/posts';
+import { UI } from '@/config';
+
+const groups = sortedGroups(groupByTag(await getPublishedPosts()));
+const max = Math.max(...groups.map((g) => g.posts.length), 1);
+---
+
+<PageLayout title={UI.tags} lead={`${groups.length} thẻ`}>
+  <ul class="flex flex-wrap gap-2">
+    {
+      groups.map((g) => (
+        <li>
+          <a
+            href={href.tag(g.name)}
+            class="inline-flex items-baseline gap-1.5 rounded-md bg-[var(--bg-subtle)] px-3 py-1.5 transition hover:text-[var(--accent)]"
+            style={`font-size: ${(0.875 + (g.posts.length / max) * 0.5).toFixed(3)}rem`}
+          >
+            <span>#{g.name}</span>
+            <span class="text-xs text-[var(--text-muted)]">{g.posts.length}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</PageLayout>

@@ -1,0 +1,100 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+import { UI } from '@/config';
+---
+
+<PageLayout title={UI.search}>
+  <form role="search" onsubmit="return false">
+    <label for="q" class="sr-only">{UI.search}</label>
+    <input
+      id="q"
+      type="search"
+      autocomplete="off"
+      placeholder={UI.searchPlaceholder}
+      class="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] px-4 py-2.5 outline-none focus:border-[var(--accent)]"
+    />
+  </form>
+
+  <p id="search-status" class="mt-4 text-sm text-[var(--text-muted)]" role="status" aria-live="polite"></p>
+  <div id="search-results" class="mt-2 space-y-4"></div>
+</PageLayout>
+
+<script>
+  import { UI } from '@/config';
+
+  const input = document.getElementById('q') as HTMLInputElement | null;
+  const results = document.getElementById('search-results')!;
+  const status = document.getElementById('search-status')!;
+
+  interface PagefindResult {
+    data: () => Promise<{ url: string; meta: { title?: string }; excerpt: string }>;
+  }
+  interface Pagefind {
+    search: (q: string) => Promise<{ results: PagefindResult[] }>;
+    init?: () => Promise<void>;
+  }
+
+  let pagefind: Pagefind | null = null;
+
+  async function load() {
+    if (pagefind) return pagefind;
+    try {
+      // Chỉ tồn tại sau `astro build && pagefind`, không có trong `astro dev`.
+      pagefind = (await import(/* @vite-ignore */ '/pagefind/pagefind.js')) as Pagefind;
+      await pagefind.init?.();
+      return pagefind;
+    } catch {
+      status.textContent = UI.searchDevNotice;
+      return null;
+    }
+  }
+
+  const escape = (s: string) => s.replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  let token = 0;
+
+  async function run(query: string) {
+    const mine = ++token;
+    if (!query.trim()) {
+      results.innerHTML = '';
+      status.textContent = '';
+      return;
+    }
+
+    const engine = await load();
+    if (!engine || mine !== token) return;
+
+    const found = await engine.search(query);
+    if (mine !== token) return;
+
+    const items = await Promise.all(found.results.slice(0, 20).map((r) => r.data()));
+    if (mine !== token) return;
+
+    status.textContent = items.length ? `${items.length} kết quả` : UI.searchEmpty;
+    results.innerHTML = items
+      .map(
+        (item) => `
+        <article class="border-b border-[var(--border)] pb-4">
+          <h2 class="font-semibold">
+            <a href="${escape(item.url)}" class="hover:text-[var(--accent)]">${escape(item.meta.title ?? item.url)}</a>
+          </h2>
+          <p class="mt-1 text-sm text-[var(--text-muted)]">${item.excerpt}</p>
+        </article>`,
+      )
+      .join('');
+  }
+
+  let timer: ReturnType<typeof setTimeout>;
+  input?.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => run(input.value), 180);
+  });
+
+  // Cho phép mở thẳng /search/?q=...
+  const initial = new URLSearchParams(location.search).get('q');
+  if (initial && input) {
+    input.value = initial;
+    run(initial);
+  }
+</script>

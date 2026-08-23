@@ -1,0 +1,41 @@
+---
+import type { Post } from '@/lib/posts';
+import { href } from '@/lib/posts';
+import { UI } from '@/config';
+import { slugify } from '@/lib/slug';
+
+interface Props { series: string; posts: Post[]; current: Post }
+const { series, posts, current } = Astro.props;
+const index = posts.findIndex((p) => p.id === current.id);
+---
+
+<nav
+  class="rounded-lg border border-[var(--border)] bg-[var(--bg-subtle)] p-4"
+  aria-labelledby={`series-${slugify(series)}`}
+  data-pagefind-ignore
+>
+  <h2 id={`series-${slugify(series)}`} class="text-sm font-semibold">
+    {UI.series}:
+    <a href={href.series(series)} class="text-[var(--accent)] hover:underline">{series}</a>
+    <span class="font-normal text-[var(--text-muted)]">
+      · {UI.seriesPart(index + 1, posts.length)}
+    </span>
+  </h2>
+
+  <ol class="mt-3 space-y-1 text-sm">
+    {
+      posts.map((p, i) => (
+        <li class="flex gap-2">
+          <span class="text-[var(--text-muted)] tabular-nums">{i + 1}.</span>
+          {p.id === current.id ? (
+            <span class="font-semibold" aria-current="true">{p.data.title}</span>
+          ) : (
+            <a href={href.post(p)} class="text-[var(--text-muted)] hover:text-[var(--accent)]">
+              {p.data.title}
+            </a>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
