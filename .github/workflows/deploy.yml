@@ -1,0 +1,80 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - .gitignore
+      - README.md
+      - LICENSE
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Một lần deploy tại một thời điểm. Không huỷ giữa chừng: đây là bản chạy
+# thật, để nó chạy xong còn hơn bỏ dở.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # BẮT BUỘC: ngày "cập nhật" của mỗi bài lấy từ `git log --follow`.
+          # Clone nông sẽ khiến mọi bài mất ngày cập nhật mà không báo lỗi.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      # Lấy site/base từ output của configure-pages để workflow vẫn đúng
+      # nếu sau này gắn tên miền riêng, thay vì phụ thuộc giá trị hardcode.
+      - name: Build site
+        run: |
+          npx astro build \
+            --site "${{ steps.pages.outputs.origin }}" \
+            --base "${{ steps.pages.outputs.base_path }}"
+        env:
+          NODE_ENV: production
+
+      # Bước riêng, chạy SAU astro build: index hỏng thì phân biệt được ngay
+      # với build hỏng khi đọc log.
+      - name: Build search index
+        run: npx pagefind --site dist
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+          # Từ v4, dotfile bị loại khỏi artifact. dist/.nojekyll cần đi cùng.
+          include-hidden-files: true
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
