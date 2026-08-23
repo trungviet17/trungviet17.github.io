@@ -36,8 +36,17 @@ const showToc = toc && headings.filter((h) => h.depth === 2 || h.depth === 3).le
   tags={tags}
   wide={showToc}
 >
-  <div class:list={['gap-10', showToc && 'xl:grid xl:grid-cols-[minmax(0,1fr)_13rem]']}>
-    <article class="min-w-0 max-w-3xl">
+  {/*
+    Mục lục hẹp lại ở khổ laptop: ở 1280px nó mà rộng 16rem thì cột nội dung
+    bị bóp xuống dưới mức trước khi nới. Chỉ nới mục lục khi màn hình đủ rộng.
+  */}
+  <div
+    class:list={[
+      'gap-10 2xl:gap-12',
+      showToc && 'xl:grid xl:grid-cols-[minmax(0,1fr)_13rem] 2xl:grid-cols-[minmax(0,1fr)_16rem]',
+    ]}
+  >
+    <article class="min-w-0 max-w-[54rem]">
       <header class="mb-8">
         <div class="flex flex-wrap gap-2 text-sm">
           {categories.map((c) => (

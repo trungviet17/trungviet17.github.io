@@ -52,18 +52,18 @@ const { wide = false, ...head } = Astro.props;
       {UI.skipToContent}
     </a>
 
-    <div class="mx-auto grid max-w-7xl gap-8 px-4 py-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-12 lg:px-8 lg:py-12">
+    <div class="mx-auto grid max-w-[92rem] gap-8 px-4 py-8 lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-12 lg:px-8 lg:py-12">
       <div class="lg:sticky lg:top-12 lg:h-fit">
         <Sidebar />
       </div>
 
-      <main id="main" class:list={['min-w-0', !wide && 'max-w-3xl']}>
+      <main id="main" class:list={['min-w-0', !wide && 'max-w-4xl']}>
         <slot />
       </main>
     </div>
 
     <footer
-      class="mx-auto max-w-7xl px-4 py-8 text-center text-sm text-[var(--text-muted)] lg:px-8"
+      class="mx-auto max-w-[92rem] px-4 py-8 text-center text-sm text-[var(--text-muted)] lg:px-8"
       data-pagefind-ignore
     >
       <p>© {new Date().getUTCFullYear()} {SITE.author}. Viết bằng Astro.</p>
