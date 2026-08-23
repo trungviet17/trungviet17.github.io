@@ -1,10 +1,11 @@
 ---
-title: Kiến trúc của mô hình Llama 
+title: Kiến trúc của mô hình Llama
 date: 2024-10-12
 categories: [LLM]
 tags: [llama]
-author:  Trung Viet 
+author: Trung Việt
 math: true
+description: "Phân tích kiến trúc mô hình Llama: RMSNorm, RoPE, SwiGLU và Grouped Query Attention."
 ---
 
 

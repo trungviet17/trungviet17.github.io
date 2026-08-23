@@ -1,7 +1,6 @@
 ---
-# the default layout is 'page'
-icon: fas fa-info-circle
-order: 4
+title: Giới thiệu
+description: Đôi lời về Trung Việt và blog này.
 ---
 ![tremo-mountain](/assets/img/about/introduce-yourself-no.jpg){: w="700" h="400" }
 

@@ -3,8 +3,11 @@ title: "Papers Explained 01 : Dolma"
 date: 2025-03-20
 categories: [Papers explained]
 tags: [pretraining dataset, llm]
-author:  Trung Viet 
+author: Trung Việt
 math: true
+description: "Papers Explained 01: bộ dữ liệu pretraining Dolma và quy trình xử lý dữ liệu quy mô lớn."
+series: Papers Explained
+order: 1
 ---
 
 
