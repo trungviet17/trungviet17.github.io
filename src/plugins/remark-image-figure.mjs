@@ -76,7 +76,11 @@ export default function remarkImageFigure() {
 
       const last = kids[end - 1];
       const caption = last?.type === 'emphasis' ? last : null;
-      const imageIndex = caption ? end - 2 : end - 1;
+      let imageIndex = caption ? end - 2 : end - 1;
+      // Xuống dòng mềm giữa ảnh và chú thích sinh ra một text node "\n". Với bài
+      // cũ nó vô tình bị bước 1 xoá cùng `{: w= h= }`, nhưng bài mới không dùng
+      // cú pháp kramdown nữa nên phải tự bỏ qua, không thì mất <figcaption>.
+      while (imageIndex > 0 && !meaningful([kids[imageIndex]]).length) imageIndex--;
       const image = kids[imageIndex];
       if (image?.type !== 'image') return;
 
